@@ -1,0 +1,125 @@
+[
+    {
+        "id": "ebc382520505626a",
+        "type": "tab",
+        "label": "forecast",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5781109b4c4c561f",
+        "type": "comment",
+        "z": "ebc382520505626a",
+        "name": "Simple Forecast application",
+        "info": "This sample application takes input from modbus node, in this case it is energy meter and the energy meter node processes the data which is provided as input to Simple Forecast node\n\n",
+        "x": 220,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "653dd61436935605",
+        "type": "energy-meter",
+        "z": "ebc382520505626a",
+        "name": "",
+        "x": 350,
+        "y": 280,
+        "wires": [
+            [
+                "f0f0abbb345a5142"
+            ]
+        ]
+    },
+    {
+        "id": "f0f0abbb345a5142",
+        "type": "forecast",
+        "z": "ebc382520505626a",
+        "name": "Predict",
+        "alpha": "0.2",
+        "numStdDevs": "0.5",
+        "adaptive": true,
+        "x": 540,
+        "y": 280,
+        "wires": [
+            [
+                "301dbee057cf6f98"
+            ]
+        ]
+    },
+    {
+        "id": "301dbee057cf6f98",
+        "type": "debug",
+        "z": "ebc382520505626a",
+        "name": "Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 730,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "467a0a3c967ab42a",
+        "type": "modbus-read",
+        "z": "ebc382520505626a",
+        "name": "SDM 120 Voltage",
+        "topic": "",
+        "showStatusActivities": true,
+        "logIOActivities": false,
+        "showErrors": true,
+        "showWarnings": true,
+        "unitid": "1",
+        "dataType": "InputRegister",
+        "adr": "0",
+        "quantity": "2",
+        "rate": "1",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "b69d19ed.84d768",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 140,
+        "y": 280,
+        "wires": [
+            [
+                "653dd61436935605"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b69d19ed.84d768",
+        "type": "modbus-client",
+        "name": "Serial_2400_8_N_1",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": true,
+        "queueLogEnabled": false,
+        "failureLogEnabled": false,
+        "tcpHost": "10.10.100.254",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB0",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "",
+        "unit_id": "1",
+        "commandDelay": "30",
+        "clientTimeout": "2000",
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": "5000",
+        "parallelUnitIdsAllowed": false
+    }
+]
