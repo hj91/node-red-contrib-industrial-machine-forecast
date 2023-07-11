@@ -1,4 +1,4 @@
-# node-red-contrib-forecast
+# node-red-contrib-industrial-machine-forecast
 
 This Node-RED custom node applies exponential smoothing to forecast the next value in a time series and flags any anomalies based on a configurable threshold. It can be especially useful for predictive or preventive maintenance of equipment or any application involving time-series data where sudden spikes or drops are critical.
 
@@ -11,7 +11,7 @@ or
 This package can be installed via npm:
 
 ```bash
-npm install node-red-contrib-forecast
+npm install node-red-contrib-industrial-machine-forecast
 ```
 
 ## Usage
