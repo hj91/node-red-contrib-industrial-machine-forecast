@@ -1,0 +1,65 @@
+<!--
+
+forecast.html - Copyright 2023 Harshad Joshi and Bufferstack.IO Analytics Technology LLP, Pune.
+
+Licensed under the GNU General Public License, Version 3.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.gnu.org/licenses/gpl-3.0.html
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+
+<script type="text/x-red" data-template-name="forecast">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-alpha"><i class="icon-adjust"></i> Alpha (Smoothing Factor)</label>
+        <input type="number" id="node-input-alpha" placeholder="Alpha" min="0" max="1" step="0.01">
+    </div>
+    <div class="form-row">
+        <label for="node-input-numStdDevs"><i class="icon-resize-horizontal"></i> Std Devs (Threshold)</label>
+        <input type="number" id="node-input-numStdDevs" placeholder="Std Devs" min="0">
+    </div>
+    <div class="form-row">
+        <label for="node-input-adaptive"><i class="icon-cogs"></i> Adaptive Mode</label>
+        <input type="checkbox" id="node-input-adaptive">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="forecast">
+    <p>This node forecasts the next value in a time series using exponential smoothing, and flags anomalies based on the number of standard deviations the actual value is from the forecast.</p>
+    <p>The node classifies anomalies as either "Sudden Spike" if the value significantly increases or "Sudden Drop" if the value significantly decreases.</p>
+    <p>If the adaptive mode is enabled, the smoothing factor alpha is automatically adjusted based on the volatility of the incoming data.</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('forecast',{
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:""},
+            alpha: {value:0.5, required:true, validate:RED.validators.number()},
+            numStdDevs: {value:2, required:true, validate:RED.validators.number()},
+            adaptive: {value:false}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "font-awesome/fa-flag-o",
+        label: function() {
+            return this.name||"forecast";
+        },
+        oneditprepare: function() {
+            // nothing to do
+        }
+    });
+</script>
+
