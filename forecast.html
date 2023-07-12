@@ -22,6 +22,14 @@ limitations under the License.
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
+        <label for="node-input-machine"><i class="icon-tag"></i> Machine Name</label>
+        <input type="text" id="node-input-machine" placeholder="machine">
+    </div>
+    <div class="form-row">
+        <label for="node-input-parameter"><i class="icon-tag"></i> Parameter to measure</label>
+        <input type="text" id="node-input-parameter" placeholder="parameter">
+    </div>
+    <div class="form-row">
         <label for="node-input-alpha"><i class="icon-adjust"></i> Alpha (Smoothing Factor)</label>
         <input type="number" id="node-input-alpha" placeholder="Alpha" min="0" max="1" step="0.01">
     </div>
@@ -43,10 +51,12 @@ limitations under the License.
 
 <script type="text/javascript">
     RED.nodes.registerType('forecast',{
-        category: 'function',
+        category: 'Bufferstack.IO',
         color: '#a6bbcf',
         defaults: {
             name: {value:""},
+            machine: {value:"", required:true},
+            parameter: {value:"", required:true},
             alpha: {value:0.5, required:true, validate:RED.validators.number()},
             numStdDevs: {value:2, required:true, validate:RED.validators.number()},
             adaptive: {value:false}

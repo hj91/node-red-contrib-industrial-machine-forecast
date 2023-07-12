@@ -20,6 +20,8 @@ module.exports = function(RED) {
     function ForecastNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
+        node.machine = config.machine || "machine"; // Add machine name and details here
+        node.parameter = config.parameter; // Parameters defination that are to be logged or displayed
         node.alpha = config.alpha || 0.5; // Exponential smoothing factor
         node.numStdDevs = config.numStdDevs || 2; // Number of standard deviations for the threshold
         node.adaptive = config.adaptive || false; // Adaptive mode flag
@@ -29,11 +31,15 @@ module.exports = function(RED) {
         node.n = 0;
         node.on('input', function(msg) {
             var current = Number(msg.payload);
+            var machine = node.machine;
+            var parameter = node.parameter;
             node.n++;
             if (node.lastValue === null) {
                 node.lastValue = current;
                 node.mean = current;
                 msg.payload = {
+                    machine: machine,
+                    parameter: parameter,
                     value: current,
                     status: "Normal"
                 };
@@ -55,12 +61,16 @@ module.exports = function(RED) {
                 if (absPredictionError > node.numStdDevs * Math.sqrt(node.variance)) {
                     var anomalyType = predictionError > 0 ? "Sudden Spike" : "Sudden Drop";
                     msg.payload = {
+                        machine: machine,
+                        parameter: parameter,
                         value: current,
                         status: "Anomaly - " + anomalyType
                     };
                     node.status({fill:"red", shape:"ring", text:"Anomaly - " + anomalyType});
                 } else {
                     msg.payload = {
+                        machine: machine,
+                        parameter: parameter,
                         value: current,
                         status: "Normal"
                     };
